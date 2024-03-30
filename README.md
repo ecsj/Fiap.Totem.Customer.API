@@ -1,5 +1,5 @@
-# Fiap Tech Challenge - Order API
-Esse microsserviço é reponsável por realizar os pedidos do sistema Totem
+# Fiap Tech Challenge - Customer API
+Esse microsserviço é reponsável por realizar os o cadastro e gestão dos clientes
 
 ## Technologies / Components implemented
 
