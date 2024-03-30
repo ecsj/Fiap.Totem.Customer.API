@@ -9,10 +9,12 @@ namespace Application.UseCases;
 public class ClientUseCase : IClientUseCase
 {
     private readonly IClientRepository _clienteRepository;
+    private readonly IMessageQueueService _queueService;
 
-    public ClientUseCase(IClientRepository clienteRepository)
+    public ClientUseCase(IClientRepository clienteRepository, IMessageQueueService queueService)
     {
         _clienteRepository = clienteRepository;
+        _queueService = queueService;
     }
 
     public IQueryable<Client> Get()
@@ -39,6 +41,8 @@ public class ClientUseCase : IClientUseCase
 
         await _clienteRepository.AddAsync(client);
 
+        _queueService.PublishMessage("Totem.Customer.Created", client.ToJson());
+
         return client;
     }
 
@@ -48,6 +52,9 @@ public class ClientUseCase : IClientUseCase
 
         if (client is null) throw new DomainException("Client não encontrado");
 
+        _queueService.PublishMessage("Totem.Customer.Updated", client.ToJson());
+
+
         await _clienteRepository.UpdateAsync(client);
     }
 
@@ -56,6 +63,9 @@ public class ClientUseCase : IClientUseCase
         var client = await GetById(id);
 
         if (client is null) throw new DomainException("Client não encontrado");
+
+        _queueService.PublishMessage("Totem.Customer.Deleted", client.ToJson());
+
 
         await _clienteRepository.DeleteAsync(client);
     }
