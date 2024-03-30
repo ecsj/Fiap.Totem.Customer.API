@@ -38,6 +38,14 @@ public class AssertionConcern
         }
     }
 
+    public static void AssertArgumentMatchesRegex(string value, string pattern, string message)
+    {
+        if (!Regex.IsMatch(value, pattern))
+        {
+            throw new ArgumentException(message);
+        }
+    }
+
     public static void AssertArgumentMatches(string pattern, string stringValue, string message)
     {
         Regex regex = new Regex(pattern);

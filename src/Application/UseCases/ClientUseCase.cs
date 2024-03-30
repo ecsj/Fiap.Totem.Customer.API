@@ -33,6 +33,10 @@ public class ClientUseCase : IClientUseCase
     {
         var client = Client.FromRequest(request);
 
+        var existClient = await GetByCpf(client.CPF);
+
+        if (existClient != null) throw new Exception("CPF já cadastrado");
+
         await _clienteRepository.AddAsync(client);
 
         return client;

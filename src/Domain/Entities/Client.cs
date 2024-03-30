@@ -1,5 +1,6 @@
 ﻿using Domain.Base;
 using Domain.Request;
+using System.Text.RegularExpressions;
 
 namespace Domain.Entities;
 
@@ -24,11 +25,13 @@ public class Client : Entity, IAggregateRoot
 
     public static Client FromRequest(ClientRequest clientRequest)
     {
+        var cpf = Regex.Replace(clientRequest.CPF, @"[.-]", "");
+
         return new Client
         {
             Name = clientRequest.Name,
             Email = clientRequest.Email,
-            CPF = clientRequest.CPF,
+            CPF = cpf,
             Address = new Address(
                 clientRequest.AddressRequest?.Street, 
                 clientRequest.AddressRequest?.City, 

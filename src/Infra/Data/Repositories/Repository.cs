@@ -15,6 +15,8 @@ public class Repository<T> : IRepository<T> where T : class
     {
         await _dbContext.Set<T>().AddAsync(entity);
 
+        await SaveChangesAsync();
+
         return entity;
     }
 
@@ -37,6 +39,8 @@ public class Repository<T> : IRepository<T> where T : class
     public virtual async Task UpdateAsync(T entity)
     {
         _dbContext.Set<T>().Update(entity);
+
+        await SaveChangesAsync();
     }
 
     public virtual async Task DeleteAsync(T entity)

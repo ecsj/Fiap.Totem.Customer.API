@@ -2,7 +2,7 @@ using Domain.Base;
 
 namespace Domain.Entities;
 
-public class Address
+public class Address : Entity
 {
     public string Street { get; set; }
     public string City { get; set; }

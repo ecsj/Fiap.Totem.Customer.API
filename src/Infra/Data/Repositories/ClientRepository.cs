@@ -11,8 +11,21 @@ public class ClientRepository : Repository<Client>, IClientRepository
     {
         
     }
+
+    public async Task<Client> GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Set<Client>().Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public IQueryable<Client> Get()
+    {
+        var entitySet = _dbContext.Set<Client>().Include(x => x.Address);
+
+        return entitySet;
+    }
+
     public async Task<Client> GetByCpf(string cpf)
     {
-        return await _dbContext.Set<Client>().FirstOrDefaultAsync(c => c.CPF == cpf);
+        return await _dbContext.Set<Client>().Include(x => x.Address).FirstOrDefaultAsync(c => c.CPF == cpf);
     }
 }

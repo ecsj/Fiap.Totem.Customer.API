@@ -19,7 +19,7 @@ builder.Services.AddControllers(options =>
 }); builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fiap Tech Challenge - Order API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fiap Tech Challenge - Customer API", Version = "v1" });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
